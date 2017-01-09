@@ -11,8 +11,24 @@
     <properties>
         <mysql.version>5.1.21</mysql.version>
         <spring.version>3.2.17.RELEASE</spring.version>
-
     </properties>
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env.name>dev</env.name>
+            </properties>
+        </profile>
+        <profile>
+            <id>idc</id>
+            <properties>
+                <env.name>idc</env.name>
+            </properties>
+        </profile>
+    </profiles>
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -130,6 +146,31 @@
             </plugin>
 
         </plugins>
+        <filters>
+            <filter>../src/main/resources/${env.name}/datasource.properties</filter>
+        </filters>
+        <resources>
+            <!-- 保证所有的resources下的配置文件能被编译打包 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <!-- 保证resources下的所有的properties配置文件可以被过滤-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <excludes>
+                    <exclude>**/spring/**</exclude>
+                </excludes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
     <modules>
         <module>springbk-app</module>
