@@ -1,3 +1,20 @@
 .idea
 springbk.iml
 target/
+### idea
+/out/
+.idea
+*.iml
+*.iws
+tomcatlogdir_*
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+### eclipse
+.project
+.settings
+.classpath
+
+### log
+*.log
+*.zip
