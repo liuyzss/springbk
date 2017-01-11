@@ -3,7 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>com.blueknight</groupId>
     <artifactId>springbk</artifactId>
     <packaging>pom</packaging>
@@ -12,6 +11,45 @@
         <mysql.version>5.1.21</mysql.version>
         <spring.version>3.2.17.RELEASE</spring.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>test</id>
+            <name>test</name>
+            <url>http://localhost:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>test</id>
+            <name>test</name>
+            <url>http://localhost:8081/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+    <distributionManagement>
+        <repository>
+            <id>user-release1</id>
+            <name>User Project Release1</name>
+            <url>http://localhost:8081/nexus/content/repositories/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>user-snapshots1</id>
+            <name>User Project SNAPSHOTS1</name>
+            <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
     <profiles>
         <profile>
             <id>dev</id>
@@ -131,7 +169,27 @@
             <artifactId>logback-classic</artifactId>
             <version>1.1.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.blueknight</groupId>
+            <artifactId>bkutils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- test begin -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- test end -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
     </dependencies>
+
     <build>
         <plugins>
             <!--mybatis 逆向工程插件-->
@@ -144,7 +202,15 @@
                     <overwrite>true</overwrite>
                 </configuration>
             </plugin>
-
+            <!--跳过单元测试-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
         </plugins>
         <filters>
             <filter>../src/main/resources/${env.name}/datasource.properties</filter>
