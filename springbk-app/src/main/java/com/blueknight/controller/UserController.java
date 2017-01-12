@@ -5,9 +5,7 @@ import com.blueknight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,6 +53,15 @@ public class UserController {
         attributes.addFlashAttribute("username",model.asMap().get("username"));
         System.out.println(model.asMap().get("username"));
         model.addAttribute("test","test");
+        Map map = new HashMap<String,String>();
+        map.put("name","liuyang");
+        return map;
+    }
+
+    @RequestMapping(value = "/add/{rollback}",method = RequestMethod.GET)
+    @ResponseBody
+    public Object addUser(@PathVariable("rollback") Integer rollback) throws Exception{
+        userService.testInsert(rollback);
         Map map = new HashMap<String,String>();
         map.put("name","liuyang");
         return map;

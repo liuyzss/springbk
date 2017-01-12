@@ -24,7 +24,7 @@ public class TestDemo {
     @Test
     public void test(){
         BKUtil.hello();
-        List<User> list = userMapper.select();
-        System.out.println(list);
+        //List<User> list = userMapper.select();
+        //System.out.println(list);
     }
 }

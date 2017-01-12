@@ -17,5 +17,5 @@ public interface UserService {
      * @throws Exception
      */
     List<User> findUser()throws Exception;
-    public void testInsert();
+    public void testInsert(Integer rollback) throws Exception;
 }
