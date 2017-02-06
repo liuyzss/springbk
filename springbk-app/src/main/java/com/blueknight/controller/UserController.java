@@ -2,13 +2,17 @@ package com.blueknight.controller;
 
 import com.blueknight.dao.po.User;
 import com.blueknight.service.UserService;
+import com.blueknight.vo.UserVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,48 +26,67 @@ public class UserController {
     private UserService userService;
 
     @ModelAttribute("username")
-    public String replaceSensitiveWords(String username){
+    public String replaceSensitiveWords(String username) {
 
-        if(null != username){
-            username = username.replaceAll("D","T");
+        if (null != username) {
+            username = username.replaceAll("D", "T");
         }
         return username;
     }
+
     /**
      * 查找所用用户控制器方法
+     *
      * @return
      * @throws Exception
      */
     @RequestMapping("/findUser")
-    public ModelAndView findUser()throws Exception{
+    public ModelAndView findUser() throws Exception {
         ModelAndView modelAndView = new ModelAndView();
 
         //调用service方法得到用户列表
         List<User> users = userService.findUser();
         //将得到的用户列表内容添加到ModelAndView中
-        modelAndView.addObject("users",users);
+        modelAndView.addObject("users", users);
         //设置响应的jsp视图
         modelAndView.setViewName("findUser");
 
         return modelAndView;
     }
+
     @RequestMapping("/username")
     @ResponseBody
-    public Object modeAttr(RedirectAttributes attributes,Model model)throws Exception{
-        attributes.addFlashAttribute("username",model.asMap().get("username"));
+    public Object modeAttr(RedirectAttributes attributes, Model model) throws Exception {
+        attributes.addFlashAttribute("username", model.asMap().get("username"));
         System.out.println(model.asMap().get("username"));
-        model.addAttribute("test","test");
-        Map map = new HashMap<String,String>();
-        map.put("name","liuyang");
+        model.addAttribute("test", "test");
+        Map map = new HashMap<String, String>();
+        map.put("name", "liuyang");
         return map;
     }
 
-    @RequestMapping(value = "/add/{rollback}",method = RequestMethod.GET)
+    @RequestMapping(value = "/add/{rollback}", method = RequestMethod.GET)
     @ResponseBody
-    public Object addUser(@PathVariable("rollback") Integer rollback) throws Exception{
+    public Object addUser(@PathVariable("rollback") Integer rollback) throws Exception {
         userService.testInsert(rollback);
-        Map map = new HashMap<String,String>();
-        map.put("name","liuyang");
+        Map map = new HashMap<String, String>();
+        map.put("name", "liuyang");
         return map;
     }
+
+    @RequestMapping(value = "/addUser", method = RequestMethod.GET)
+    @ResponseBody
+    public Object add(@Valid UserVo userVo, BindingResult result) throws Exception {
+        User user = new User();
+        BeanUtils.copyProperties(userVo, user);
+        userService.add(user);
+        Map map = new HashMap<String, String>();
+        if (result.hasErrors()) {
+            map.put("error",result.getAllErrors());
+        } else {
+            map.put("date", user);
+        }
+        return map;
+    }
+
 }
