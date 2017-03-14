@@ -1,4 +1,4 @@
-package com.blueknight.vo;
+package com.blueknight.demo.java;
 
 import java.util.concurrent.TimeUnit;
 

@@ -1,12 +1,15 @@
 package com.blueknight.vo;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.BeanUtils;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Date;
 
-public class UserVo {
+public class UserVo implements Serializable{
     private Integer id;
     @NotBlank
     private String username;
@@ -57,5 +60,10 @@ public class UserVo {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
