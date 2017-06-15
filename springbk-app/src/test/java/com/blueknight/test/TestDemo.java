@@ -1,7 +1,6 @@
 package com.blueknight.test;
 
 import com.blueknight.mapper.UserMapper;
-import com.blueknight.utils.BKUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ public class TestDemo {
     private UserMapper userMapper;
     @Test
     public void test(){
-        BKUtil.hello();
         //List<User> list = userMapper.select();
         //System.out.println(list);
     }

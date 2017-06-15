@@ -21,7 +21,7 @@ public class QueueConsumer {
 	    MessageConsumer consumer;
 	    connectionFactory = new ActiveMQConnectionFactory("admin", "admin", "tcp://127.0.0.1:61616");
 	    ActiveMQConnectionFactory test = (ActiveMQConnectionFactory) connectionFactory;
-	    test.setTrustedPackages(Arrays.asList("com.blueknight.demo.activemq"));
+	    //test.setTrustedPackages(Arrays.asList("com.blueknight.demo.activemq"));
 	    try {
 	        // 构造从工厂得到连接对象  
 	        connection = connectionFactory.createConnection();

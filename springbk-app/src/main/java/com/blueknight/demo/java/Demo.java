@@ -1,5 +1,8 @@
 package com.blueknight.demo.java;
 
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * Created by liuyang on 2017/3/5.
  */
@@ -20,6 +23,8 @@ public class Demo {
     }
     public static void main(String args[]){
 
+        ReentrantLock a1;
+        ConcurrentHashMap b2;
         Demo d = new Demo();
         d.change(d.str,d.ch);
         System.out.println(d.str +"and");

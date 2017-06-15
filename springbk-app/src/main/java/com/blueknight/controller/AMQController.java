@@ -1,6 +1,5 @@
 package com.blueknight.controller;
 
-import com.blueknight.dao.po.User;
 import com.blueknight.service.UserService;
 import com.blueknight.vo.UserVo;
 import org.springframework.beans.BeanUtils;

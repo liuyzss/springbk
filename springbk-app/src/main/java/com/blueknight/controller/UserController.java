@@ -21,6 +21,7 @@ import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,9 +50,14 @@ public class UserController {
      * @throws Exception
      */
     @RequestMapping("/findUser")
-    public ModelAndView findUser() throws Exception {
+    public ModelAndView findUser(@RequestParam("count") int count) throws Exception {
         ModelAndView modelAndView = new ModelAndView();
 
+        List list = new ArrayList();
+        for (int i = 0;i< count;i++){
+            byte[] bytes = new byte[1024];
+            list.add(bytes);
+        }
         //调用service方法得到用户列表
         List<User> users = userService.findUser();
         //将得到的用户列表内容添加到ModelAndView中

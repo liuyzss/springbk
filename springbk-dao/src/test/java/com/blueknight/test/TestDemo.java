@@ -1,6 +1,5 @@
 package com.blueknight.test;
 
-import com.blueknight.utils.BKUtil;
 import org.junit.Test;
 
 /**
@@ -10,6 +9,6 @@ import org.junit.Test;
 public class TestDemo {
     @Test
     public void test(){
-        BKUtil.hello();
+
     }
 }
