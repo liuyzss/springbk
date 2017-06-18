@@ -18,6 +18,7 @@ package com.blueknight.dubbo.server.provider;
 public class DemoProvider {
 
     public static void main(String[] args) {
+        System.setProperty("dubbo.application.logger","slf4j");
         com.alibaba.dubbo.container.Main.main(null);
     }
 
