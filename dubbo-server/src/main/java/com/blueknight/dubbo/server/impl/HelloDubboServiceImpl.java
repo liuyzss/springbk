@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
  */
 @Service("helloDubboService")
 public class HelloDubboServiceImpl implements HelloDubboService {
-    public void sayHello(String name) {
+    public String sayHello(String name) {
         System.out.println("--------------------- dubbo -------------:Hello "+name);
+        return "Hello "+name;
     }
 }
