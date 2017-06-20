@@ -1,6 +1,8 @@
 package com.blueknight.dubbo.server.impl;
 
 import com.blueknight.dubbo.server.api.HelloDubboService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,8 +10,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("helloDubboService")
 public class HelloDubboServiceImpl implements HelloDubboService {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
     public String sayHello(String name) {
-        System.out.println("--------------------- dubbo -------------:Hello "+name);
+        logger.error("hhhhhhhhh--------------------- dubbo -------------:Hello "+name);
         return "Hello "+name;
     }
 }
