@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Controller
-@RequestMapping("/amq")
+//@Controller
+//@RequestMapping("/amq")
 public class AMQController {
 
     @Resource

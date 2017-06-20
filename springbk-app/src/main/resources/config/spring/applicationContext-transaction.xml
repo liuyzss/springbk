@@ -22,6 +22,6 @@
     <!--<aop:config>-->
     <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.xiyang.demo.*.*(..))"/>-->
     <!--</aop:config>-->
-    <import resource="applicationContext-dao.xml"/>
+    <import resource="classpath*:spring/applicationContext-dao.xml"/>
     <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 </beans>
