@@ -7,7 +7,7 @@
        ">
     <dubbo:application name="${dubbo.application.name}" owner="${dubbo.application.owner}"/>
     <dubbo:registry address="${dubbo.registry.address}"/>
-    <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}" />
+    <dubbo:protocol name="${dubbo.protocol.name}" port="${dubbo.protocol.port}"/>
 
     <dubbo:service interface="com.blueknight.dubbo.server.api.HelloDubboService" ref="helloDubboService"/>
 </beans>

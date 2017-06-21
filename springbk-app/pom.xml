@@ -25,36 +25,11 @@
         <groupId>com.blueknight</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
-
     <name>springbk-app</name>
     <artifactId>springbk-app</artifactId>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.7</version>
-                <configuration>
-                    <connectors>
-                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-                            <port>8888</port>
-                            <maxIdleTime>30000</maxIdleTime>
-                        </connector>
-                    </connectors>
-                    <webAppSourceDirectory>${project.build.directory}/${pom.artifactId}-${pom.version}
-                    </webAppSourceDirectory>
-                    <contextPath>/</contextPath>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
@@ -73,8 +48,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
-
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
@@ -93,7 +66,6 @@
             <artifactId>jsp-api</artifactId>
         </dependency>
         <!--servlet/jsp api end-->
-
         <!--jstl-->
         <dependency>
             <groupId>jstl</groupId>
@@ -111,7 +83,6 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
-
         <!-- DB包  begin-->
         <dependency>
             <groupId>mysql</groupId>
@@ -128,7 +99,6 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis-spring</artifactId>
         </dependency>
-
         <!--logback-->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -146,6 +116,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.1.3</version>
+        </dependency>
+        <!--hibernate-validator-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
         </dependency>
         <!--activemq-->
         <dependency>
@@ -169,12 +144,6 @@
             <groupId>org.apache.xbean</groupId>
             <artifactId>xbean-spring</artifactId>
         </dependency>
-
-        <!--hibernate-validator-->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-        </dependency>
         <!--hessian-->
         <dependency>
             <groupId>com.caucho</groupId>
@@ -190,5 +159,22 @@
             <artifactId>junit</artifactId>
         </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>maven-jetty-plugin</artifactId>
+                <version>6.1.7</version>
+                <configuration>
+                    <connectors>
+                        <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <port>8888</port>
+                            <maxIdleTime>30000</maxIdleTime>
+                        </connector>
+                    </connectors>
+                    <contextPath>/</contextPath>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
