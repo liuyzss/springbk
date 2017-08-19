@@ -3,6 +3,7 @@ package com.blueknight.controller;
 import com.blueknight.dao.po.User;
 import com.blueknight.service.UserService;
 import com.blueknight.vo.UserVo;
+import org.apache.commons.lang.CharSet;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.JmsException;
@@ -21,6 +22,8 @@ import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.validation.Valid;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +57,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
 
         List list = new ArrayList();
-        for (int i = 0;i< count;i++){
+        for (int i = 0; i < count; i++) {
             byte[] bytes = new byte[1024];
             list.add(bytes);
         }
@@ -96,10 +99,56 @@ public class UserController {
         userService.add(user);
         Map map = new HashMap<String, String>();
         if (result.hasErrors()) {
-            map.put("error",result.getAllErrors());
+            map.put("error", result.getAllErrors());
         } else {
             map.put("date", user);
         }
         return map;
+    }
+
+    public static Object deepCopy(Object obj) throws Exception {
+        // 将该对象序列化成流,因为写在流里的是对象的一个拷贝，而原对象仍然存在于JVM里面。所以利用这个特性可以实现对象的深拷贝
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+        ObjectOutputStream oos = new ObjectOutputStream(bos);
+
+        oos.writeObject(obj);
+
+        // 将流序列化成对象
+        ByteArrayInputStream bis = new ByteArrayInputStream(bos.toByteArray());
+
+        ObjectInputStream ois = new ObjectInputStream(bis);
+
+        return ois.readObject();
+    }
+
+    public static void serialize(Object... objs){
+        ObjectOutputStream out = null;
+        try {
+            out = new ObjectOutputStream(new FileOutputStream("/Users/liuyang/objectFile.obj"));
+            for(Object obj:objs){
+                out.writeObject(obj);    //写入customer对象
+                out.writeObject("\n");
+            }
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = new String("hello");
+        //str.getBytes(CharSet.ASCII_ALPHA);
+        byte[] bytes;
+        byte[] bytes1;
+        Charset charset = Charset.forName("Utf-8");
+        System.out.println("是否可用: " + charset.canEncode());
+        bytes = str.getBytes(charset);
+        System.out.println();
+        charset = Charset.forName("UNICODE");
+        System.out.println("是否可用: " + charset.canEncode());
+        bytes1 = str.getBytes(charset);
+        UserController.serialize(bytes,bytes1);
+        System.out.println("HELLO");
     }
 }
