@@ -72,9 +72,9 @@
             </properties>
         </profile>
         <profile>
-            <id>idc</id>
+            <id>online</id>
             <properties>
-                <env.name>idc</env.name>
+                <env.name>online</env.name>
             </properties>
         </profile>
     </profiles>

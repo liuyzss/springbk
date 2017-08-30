@@ -1,8 +1,11 @@
 package com.blueknight.controller;
 
 import com.blueknight.dao.po.User;
+import com.blueknight.mapper.UserMapper;
 import com.blueknight.service.UserService;
 import com.blueknight.vo.UserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.JmsException;
@@ -21,19 +24,20 @@ import javax.jms.Message;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.*;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     //service类
     @Autowired
     private UserService userService;
 
+    @Resource
+    private UserMapper userMapper;
     @ModelAttribute("username")
     public String replaceSensitiveWords(String username) {
 
@@ -101,5 +105,52 @@ public class UserController {
             map.put("date", user);
         }
         return map;
+    }
+
+    @RequestMapping(value = "/dbLock", method = RequestMethod.GET)
+    @ResponseBody
+    public Object dbLock() throws Exception {
+
+        User user = new User();
+        user.setStuNumber("123456");
+        user.setUsername("liuyang");
+        user.setBirthday(new Date());
+        user.setSex("F");
+        user.setAddress("奥森");
+        int threadSize = 20;
+        CountDownLatch startLock = new CountDownLatch(1);
+        CountDownLatch endLock = new CountDownLatch(threadSize);
+
+        ExecutorService executorService = Executors.newFixedThreadPool(threadSize);
+
+        List<Future> futureList = new ArrayList<Future>();
+
+        for (int i = 0; i < threadSize; i++) {
+
+            Future task = executorService.submit(new Callable<Object>() {
+
+                @Override
+                public Object call() throws Exception {
+                    startLock.await();
+                    LOGGER.info("======开始======="+Thread.currentThread());
+                    userMapper.insert(user);
+                    LOGGER.info("======insert======="+Thread.currentThread());
+                    int re =  userMapper.delete(user.getStuNumber());
+                    LOGGER.info("======结束======="+Thread.currentThread());
+                    endLock.countDown();
+                    return re;
+                }
+            });
+
+        }
+
+        System.out.println(userMapper.select(user.getStuNumber()));
+        startLock.countDown();
+        try {
+            endLock.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "hello";
     }
 }
