@@ -1,10 +1,11 @@
 package com.blueknight.dao.po;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+public class User {
     private Integer id;
+
+    private String stuNumber;
 
     private String username;
 
@@ -20,6 +21,14 @@ public class User implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getStuNumber() {
+        return stuNumber;
+    }
+
+    public void setStuNumber(String stuNumber) {
+        this.stuNumber = stuNumber == null ? null : stuNumber.trim();
     }
 
     public String getUsername() {
