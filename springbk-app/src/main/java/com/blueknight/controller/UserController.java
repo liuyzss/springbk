@@ -117,7 +117,7 @@ public class UserController {
         user.setBirthday(new Date());
         user.setSex("F");
         user.setAddress("奥森");
-        int threadSize = 20;
+        int threadSize = 200;
         CountDownLatch startLock = new CountDownLatch(1);
         CountDownLatch endLock = new CountDownLatch(threadSize);
 
@@ -132,13 +132,9 @@ public class UserController {
                 @Override
                 public Object call() throws Exception {
                     startLock.await();
-                    LOGGER.info("======开始======="+Thread.currentThread());
-                    userMapper.insert(user);
-                    LOGGER.info("======insert======="+Thread.currentThread());
-                    int re =  userMapper.delete(user.getStuNumber());
-                    LOGGER.info("======结束======="+Thread.currentThread());
+                    userService.testDeadLock(user);
                     endLock.countDown();
-                    return re;
+                    return 0;
                 }
             });
 

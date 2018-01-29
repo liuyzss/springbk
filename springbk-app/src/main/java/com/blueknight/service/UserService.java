@@ -19,4 +19,6 @@ public interface UserService {
     List<User> findUser()throws Exception;
     void testInsert(Integer rollback) throws Exception;
     Integer add(User user);
+
+    void testDeadLock(User user);
 }

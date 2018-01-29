@@ -2,6 +2,7 @@ package com.blueknight.test;
 
 import com.blueknight.dao.po.User;
 import com.blueknight.mapper.UserMapper;
+import com.blueknight.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.concurrent.*;
 public class TestDemo {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserService userService;
     @Test
     public void test(){
         //List<User> list = userMapper.select();
@@ -37,7 +40,7 @@ public class TestDemo {
         user.setSex("F");
         user.setAddress("奥森");
         userMapper.insert(user);
-        int threadSize = 20;
+        int threadSize = 200;
         CountDownLatch startLock = new CountDownLatch(1);
         CountDownLatch endLock = new CountDownLatch(threadSize);
 
@@ -52,11 +55,8 @@ public class TestDemo {
                 @Override
                 public Object call() throws Exception {
                     startLock.await();
-                    System.out.println("======开始======="+Thread.currentThread());
-                    int re =  userMapper.delete(user.getStuNumber());
-                    System.out.println("======结束======="+Thread.currentThread());
-                    endLock.countDown();
-                    return re;
+                    userService.testDeadLock(user);
+                    return 0;
                 }
             });
 

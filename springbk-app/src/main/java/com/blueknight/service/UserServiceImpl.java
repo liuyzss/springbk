@@ -56,4 +56,13 @@ public class UserServiceImpl implements UserService {
     public Integer add(User user) {
         return userMapper.insert(user);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.DEFAULT)
+    public void testDeadLock(User user) {
+        logger.info("======开始======="+Thread.currentThread());
+        userMapper.insert(user);
+        logger.info("======insert======="+Thread.currentThread());
+        int re =  userMapper.delete(user.getStuNumber());
+        logger.info("======结束======="+Thread.currentThread());
+    }
 }
