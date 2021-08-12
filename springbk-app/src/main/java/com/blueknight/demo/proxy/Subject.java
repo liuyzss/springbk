@@ -1,6 +1,6 @@
-package proxy;
+package com.blueknight.demo.proxy;
 
-public interface Subject {  
+public interface Subject {
 	  /** 
 	   * 执行给定名字的任务。 
 	    * @param taskName 任务名 

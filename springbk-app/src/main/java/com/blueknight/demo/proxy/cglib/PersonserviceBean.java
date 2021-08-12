@@ -8,21 +8,34 @@ import java.io.Serializable;
 public class PersonserviceBean implements Serializable {
     private transient String test;// = "TEST";
     private String user;
+
     public String getUser() {
         return user;
     }
+
     public void setUser(String user) {
         this.user = user;
     }
-//    public PersonserviceBean() {
+
+    //    public PersonserviceBean() {
 //        super();
 //    }
 //    public PersonserviceBean(String user) {
 //        super();
 //        this.user = user;
 //    }
-    public void save(Person person){
+
+
+
+    @SlefProxy(name = "save")
+    public void save(Person person) {
+        test();
         System.out.println("执行PerServiceBean的save方法");
+    }
+
+    @SlefProxy(name = "test")
+    public void test() {
+        System.out.println("test()");
     }
 
     public String getTest() {

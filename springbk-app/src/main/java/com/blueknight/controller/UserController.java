@@ -70,12 +70,12 @@ public class UserController {
 
     @RequestMapping("/username")
     @ResponseBody
-    public Object modeAttr(RedirectAttributes attributes, Model model) throws Exception {
+    public Object modeAttr(RedirectAttributes attributes, Model model , @RequestParam("name") String name ) throws Exception {
         attributes.addFlashAttribute("username", model.asMap().get("username"));
         System.out.println(model.asMap().get("username"));
         model.addAttribute("test", "test");
         Map map = new HashMap<String, String>();
-        map.put("name", "liuyang");
+        map.put("name", name);
         return map;
     }
 
